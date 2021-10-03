@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header className="flex items-center p-8">
       <LogoSVG className="w-8 h-8 cursor-pointer" onClick={handleGoHome} />
-      <p className="ml-auto">Test task for Bimspot by Dmitry Nezvinskyi</p>
+      <p className="ml-auto">Test exercise for Bimspot by Dmitry Nezvinskyi</p>
     </header>
   );
 };
