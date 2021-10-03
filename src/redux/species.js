@@ -5,6 +5,7 @@ export const speciesSlice = createSlice({
   initialState: {
     region: {},
     species: [],
+    isLoading: false,
   },
   reducers: {
     setRegion: (state, { payload }) => ({
@@ -13,10 +14,15 @@ export const speciesSlice = createSlice({
     }),
 
     fetchSpecies: (state, { payload }) => ({ ...state, species: payload }),
+
+    toggleLoader: state => ({
+      ...state,
+      isLoading: !state.isLoading,
+    }),
   },
 });
 
-export const { setRegion, fetchSpecies } = speciesSlice.actions;
+export const { setRegion, fetchSpecies, toggleLoader } = speciesSlice.actions;
 
 export const regionSelector = state => state.species.region;
 
@@ -28,5 +34,7 @@ export const criticalSpeciesSelector = createSelector([allSpeciesSelector], spec
 
 export const mammalsSelector = state =>
   state.species.species.filter(item => item.class_name === 'MAMMALIA');
+
+export const loaderSelector = state => state.species.isLoading;
 
 export default speciesSlice.reducer;

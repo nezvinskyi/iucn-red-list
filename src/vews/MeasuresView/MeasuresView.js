@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { NotificationManager } from 'react-notifications';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MeasuresList } from '../../components';
@@ -20,6 +21,7 @@ const MeasuresView = () => {
       });
       setMeasures(prevState => [...prevState, { ...item, measures: measuresData }]);
     });
+    NotificationManager.success(`${criticalSpecies.length} critically endangered species found`);
   };
 
   useEffect(() => {
