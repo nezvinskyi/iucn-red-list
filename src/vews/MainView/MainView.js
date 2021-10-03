@@ -1,13 +1,13 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import api from '../../service/iucn-api';
-import { selectRegion } from '../../redux/species';
+import { setRegion } from '../../redux/species';
 
 const MainView = () => {
   const [regions, setRegions] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
   const fetchRegions = async () => {
     const results = await api.getRegionsList();
     setRegions(results);
@@ -19,11 +19,14 @@ const MainView = () => {
   const handleRandomClick = () => {
     const randomRegionIdx = Math.floor(Math.random() * regions.length);
 
-    dispatch(selectRegion(regions[randomRegionIdx].identifier));
+    dispatch(setRegion(regions[randomRegionIdx]));
+
+    history.push('/species');
   };
 
-  const handleRegionClick = identifier => {
-    dispatch(selectRegion(identifier));
+  const handleRegionClick = region => {
+    dispatch(setRegion(region));
+    history.push('/species');
   };
 
   return (
@@ -43,7 +46,7 @@ const MainView = () => {
           <li key={region.identifier}>
             <div
               className="hover:bg-blue-500 hover:border-transparent hover:shadow-lg group block rounded-lg p-4 border border-gray-200 cursor-pointer"
-              onClick={() => handleRegionClick(region.identifier)}
+              onClick={() => handleRegionClick(region)}
             >
               <p className="group-hover:text-white leading-6 font-medium text-black">
                 {region.name}
